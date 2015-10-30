@@ -26,6 +26,20 @@ foreach ($loader->getItems() as $item) {
 }
 ```
 
+If you have CSV-file
+
+```
+id,name,surname
+1,Jack,Black
+2,John,Doe
+```
+
+you'll get 2 items
+```
+['id' => '1', 'name' => 'Jack', 'surname' => 'Black']
+['id' => '2', 'name' => 'John', 'surname' => 'Doe']
+```
+
 Advanced Usage
 --------------
 
