@@ -10,21 +10,21 @@ How to Install
 
 1.  Install the `luchaninov/csv-file-loader` package:
 
-    ```shell
-    $ composer require "luchaninov/csv-file-loader:1.*"
-    ```
+```shell
+$ composer require "luchaninov/csv-file-loader:1.*"
+```
 
 Basic Usage
 -----------
 
-    ```php
-    $loader = new CsvFileLoader();
-    $loader->setFilename('/path/to/your_data.csv');
-    
-    foreach ($loader->getItems() as $item) {
-        var_dump($item); // do something here
-    }
-    ```
+```php
+$loader = new CsvFileLoader();
+$loader->setFilename('/path/to/your_data.csv');
+
+foreach ($loader->getItems() as $item) {
+    var_dump($item); // do something here
+}
+```
 
 Advanced Usage
 --------------
