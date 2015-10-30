@@ -3,6 +3,8 @@ CSV File Loader
 
 Load CSV files using PHP generators. It uses memory like `fopen` but requires much less code.
 
+[![Build Status](https://travis-ci.org/luchaninov/csv-file-loader.svg?branch=master)](https://travis-ci.org/luchaninov/csv-file-loader)
+
 How to Install
 --------------
 
