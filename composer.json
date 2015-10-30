@@ -1,6 +1,7 @@
 {
     "name": "luchaninov/csv-file-loader",
     "type": "library",
+    "version": "1.0.0",
     "description": "Load CSV files using PHP generators",
     "keywords": ["csv", "tsv", "loader", "generator"],
     "authors": [
@@ -20,7 +21,7 @@
     "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0"
+            "dev-master": "1.0.*-dev"
         }
     }
 }
