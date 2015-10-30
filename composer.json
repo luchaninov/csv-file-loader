@@ -1,0 +1,29 @@
+{
+    "name": "luchaninov/csv-file-loader",
+    "type": "library",
+    "description": "Load CSV files using PHP generators",
+    "keywords": ["csv", "tsv", "loader", "generator"],
+    "authors": [
+        {
+            "name": "Vladimir Luchaninov",
+            "homepage": "http://luchaninov.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "4.8.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Luchaninov\\CsvFileLoader\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0"
+        }
+    }
+}
