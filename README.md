@@ -8,7 +8,7 @@ How to Install
 
 ### Using [Composer](http://getcomposer.org/)
 
-1.  Install the `luchaninov/csv-file-loader` package:
+Install the `luchaninov/csv-file-loader` package:
 
 ```shell
 $ composer require "luchaninov/csv-file-loader:1.*"
