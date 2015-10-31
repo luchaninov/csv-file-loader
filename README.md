@@ -3,8 +3,8 @@ CSV File Loader
 
 Load CSV files using PHP generators. It uses memory like `fopen` but requires less code.
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/bc1bdf45-61af-441a-adc7-1e6bb3c6c52f/big.png)](https://insight.sensiolabs.com/projects/bc1bdf45-61af-441a-adc7-1e6bb3c6c52f)
 [![Build Status](https://travis-ci.org/luchaninov/csv-file-loader.svg?branch=master)](https://travis-ci.org/luchaninov/csv-file-loader)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/bc1bdf45-61af-441a-adc7-1e6bb3c6c52f/mini.png)](https://insight.sensiolabs.com/projects/bc1bdf45-61af-441a-adc7-1e6bb3c6c52f)
 
 How to Install
 --------------
