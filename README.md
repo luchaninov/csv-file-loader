@@ -19,8 +19,7 @@ Basic Usage
 -----------
 
 ```php
-$loader = new CsvFileLoader();
-$loader->setFilename('/path/to/your_data.csv');
+$loader = new CsvFileLoader('/path/to/your_data.csv');
 
 foreach ($loader->getItems() as $item) {
     var_dump($item); // do something here
@@ -69,7 +68,22 @@ If you don't have headers in the first row - you can:
 
 If there are more cols in some rows than there are cols in headers then numerical keys are added.
 
-You can use same loader to load several files - `$loader->setFilename('other_file.csv')`. If you iterate during some file during
+You can use same loader to load several files - `$loader->setFilename('other_file.csv')`. If you iterate during some file when calling
 `setFilename` then there will be no more items from the first file, foreach will just finish.
 
 Code is very simple - look at sources and tests.
+
+TxtFileLoader
+-------------
+
+If you have simple text file use `TxtFileLoader`.
+
+It makes from file
+
+```
+text1
+text2
+text3
+```
+
+array `['text1', 'text2', 'text3']`.
