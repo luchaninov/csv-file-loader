@@ -25,11 +25,13 @@ class CsvFileLoader
      */
     protected $enclosure = '"';
 
-    public function __construct($filename = null)
+    public function __construct($filename = null, $headers = null)
     {
         if ($filename !== null) {
             $this->setFilename($filename);
         }
+
+        $this->headers = $headers;
     }
 
     /**
@@ -65,12 +67,14 @@ class CsvFileLoader
             throw new \Exception('Cannot open file');
         }
 
-        if ($this->headers === null) {
-            $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
-            $this->headers = $cols;
-            $countHeaders = count($this->headers);
-        } else {
+        if ($this->headers === false) {
             $countHeaders = 0;
+        } else {
+            if ($this->headers === null) {
+                $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+                $this->headers = $cols;
+            }
+            $countHeaders = count($this->headers);
         }
 
         while ($this->f && !feof($this->f)) {
