@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.1
+-----
+- Fix bug with headers
+
 1.1.0
 -----
 - Allow set filename via `__construct`
