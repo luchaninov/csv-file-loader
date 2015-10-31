@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.2.0
+-----
+- TxtFileLoader
+
 1.1.1
 -----
 - Fix bug with headers
