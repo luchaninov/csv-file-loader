@@ -30,6 +30,31 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
+    public function testGetItemsInitWithConstructor()
+    {
+        $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
+        file_put_contents($filename, implode("\n", [
+                implode(',', ['key1', 'key2']),
+                implode(',', ['r1_1', 'r1_2']),
+                implode(',', ['r2_1', 'r2_2']),
+            ]) . "\n");
+
+        $loader = new CsvFileLoader($filename);
+
+        $actual = [];
+        foreach ($loader->getItems() as $item) {
+            $actual[] = $item;
+        }
+
+        $expected = [
+            ['key1' => 'r1_1', 'key2' => 'r1_2'],
+            ['key1' => 'r2_1', 'key2' => 'r2_2'],
+        ];
+        $this->assertEquals($expected, $actual);
+
+        @unlink($filename);
+    }
+
     public function testGetItemsSwitchFile()
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_1_' . microtime(true) . '.txt';

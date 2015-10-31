@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.1.0
+-----
+- Allow set filename via `__construct`
+
 1.0.2
 -----
 - Updated docs

@@ -25,6 +25,13 @@ class CsvFileLoader
      */
     protected $enclosure = '"';
 
+    public function __construct($filename = null)
+    {
+        if ($filename !== null) {
+            $this->setFilename($filename);
+        }
+    }
+
     /**
      * @param string $filename
      * @throws \Exception
