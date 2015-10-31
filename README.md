@@ -1,16 +1,14 @@
 CSV File Loader
 ===============
 
-Load CSV files using PHP generators. It uses memory like `fopen` but requires much less code.
+Load CSV files using PHP generators. It uses memory like `fopen` but requires less code.
 
 [![Build Status](https://travis-ci.org/luchaninov/csv-file-loader.svg?branch=master)](https://travis-ci.org/luchaninov/csv-file-loader)
 
 How to Install
 --------------
 
-### Using [Composer](http://getcomposer.org/)
-
-Install the `luchaninov/csv-file-loader` package:
+Install the `luchaninov/csv-file-loader` package using [composer](http://getcomposer.org/):
 
 ```shell
 $ composer require "luchaninov/csv-file-loader:1.*"
@@ -42,14 +40,28 @@ you'll get 2 items
 ['id' => '2', 'name' => 'John', 'surname' => 'Doe']
 ```
 
+It uses [fgetcsv](http://php.net/fgetcsv) function so it understands enclosed values like
+
+```
+item1,"item2,still item2",item3
+```
+
+and even
+
+```
+item1,"item2
+still item2",item3
+```
+
 Advanced Usage
 --------------
 
-If you use TSV instead of CSV simply use `TsvFileLoader`.
+If you have TSV instead of CSV simply use `TsvFileLoader`.
 
 If you have custom delimiters use `setDelimiter` like `$loader->setDelimiter(';')`. Same with encloser - `setEncloser`.
+Default delimiter is `,` for `CsvFileLoader` and `\t` for `TsvFileLoader`; default encloser is `"`.
 
-By default it assumes that the first row of the file is headers - it doesn't return it as item but uses as keys for next rows.
+By default it assumes that the first row of the file contains headers - it doesn't return this row as item but uses as keys for next rows.
 If you don't have headers in the first row - you can:
 - set your own keys - `setHeaders(['key1', 'key2', ...])`
 - use numerical keys (`[0, 1, 2, ...]`) - `setHeaders(false)`
