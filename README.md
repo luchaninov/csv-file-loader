@@ -64,7 +64,7 @@ Default delimiter is `,` for `CsvFileLoader` and `\t` for `TsvFileLoader`; defau
 By default it assumes that the first row of the file contains headers - it doesn't return this row as item but uses as keys for next rows.
 If you don't have headers in the first row - you can:
 - set your own keys - `setHeaders(['key1', 'key2', ...])`
-- use numerical keys (`[0, 1, 2, ...]`) - `setHeaders(false)`
+- use numerical keys `[0, 1, 2, ...]` - `setHeaders(false)`
 
 If there are more cols in some rows than there are cols in headers then numerical keys are added.
 
