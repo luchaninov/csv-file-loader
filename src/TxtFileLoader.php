@@ -16,6 +16,8 @@ class TxtFileLoader
 
     private $skipEmptyRows = true;
 
+    private $skipComments = false;
+
     public function __construct($filename = null)
     {
         if ($filename !== null) {
@@ -60,6 +62,9 @@ class TxtFileLoader
             if ($this->skipEmptyRows && trim($s) === '') {
                 continue;
             }
+            if ($this->skipComments && substr(ltrim($s), 0, 1) === '#') {
+                continue;
+            }
 
             yield $s;
         }
@@ -76,5 +81,13 @@ class TxtFileLoader
     public function setSkipEmptyRows($skipEmptyRows)
     {
         $this->skipEmptyRows = $skipEmptyRows;
+    }
+
+    /**
+     * @param boolean $skipComments
+     */
+    public function setSkipComments($skipComments)
+    {
+        $this->skipComments = $skipComments;
     }
 }

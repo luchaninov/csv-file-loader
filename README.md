@@ -87,3 +87,11 @@ text3
 ```
 
 array `['text1', 'text2', 'text3']`.
+
+### setSkipEmptyRows
+
+Skips empty rows or containing only whitespaces `trim($s) === ''`. Default: `true`.
+
+### setSkipComments
+
+Skips rows that start with `#` or `\s+#`. Default: `false`.
