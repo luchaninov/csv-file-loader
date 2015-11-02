@@ -2,7 +2,7 @@
 
 namespace Luchaninov\CsvFileLoader;
 
-class CsvFileLoader
+class CsvFileLoader implements LoaderInterface
 {
     /**
      * @var string

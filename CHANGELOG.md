@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.4.0
+-----
+- added LoaderInterface
+
 1.3.0
 -----
 - TxtFileLoader->setSkipComments
