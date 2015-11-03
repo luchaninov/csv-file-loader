@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.5.0
+-----
+- added method `getItemsArray()`
+
 1.4.0
 -----
 - added LoaderInterface

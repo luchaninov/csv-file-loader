@@ -111,6 +111,21 @@ class CsvFileLoader implements LoaderInterface
     }
 
     /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getItemsArray()
+    {
+        $result = [];
+
+        foreach ($this->getItems() as $item) {
+            $result[] = $item;
+        }
+
+        return $result;
+    }
+
+    /**
      * @param array|null $headers
      */
     public function setHeaders($headers)

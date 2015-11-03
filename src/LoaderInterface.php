@@ -9,4 +9,10 @@ interface LoaderInterface
      * @throws \Exception
      */
     public function getItems();
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getItemsArray();
 }

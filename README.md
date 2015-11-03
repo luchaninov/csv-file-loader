@@ -56,10 +56,12 @@ still item2",item3
 Advanced Usage
 --------------
 
-If you have TSV instead of CSV simply use `TsvFileLoader`.
+If file is not large you can load all items at once without generators using `getItemsArray()`. 
 
 If you have custom delimiters use `setDelimiter` like `$loader->setDelimiter(';')`. Same with encloser - `setEncloser`.
 Default delimiter is `,` for `CsvFileLoader` and `\t` for `TsvFileLoader`; default encloser is `"`.
+
+If you have TSV instead of CSV you can set use `setDelimiter("\t")` or use `TsvFileLoader`.
 
 By default it assumes that the first row of the file contains headers - it doesn't return this row as item but uses as keys for next rows.
 If you don't have headers in the first row - you can:

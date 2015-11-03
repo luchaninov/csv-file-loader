@@ -76,6 +76,21 @@ class TxtFileLoader implements LoaderInterface
     }
 
     /**
+     * @return array
+     * @throws \Exception
+     */
+    public function getItemsArray()
+    {
+        $result = [];
+
+        foreach ($this->getItems() as $item) {
+            $result[] = $item;
+        }
+
+        return $result;
+    }
+
+    /**
      * @param boolean $skipEmptyRows
      */
     public function setSkipEmptyRows($skipEmptyRows)
