@@ -15,4 +15,10 @@ interface LoaderInterface
      * @throws \Exception
      */
     public function getItemsArray();
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public function countItems();
 }

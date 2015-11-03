@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.6.0
+-----
+- added method `countItems()`
+
 1.5.0
 -----
 - added method `getItemsArray()`

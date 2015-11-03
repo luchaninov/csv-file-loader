@@ -58,14 +58,7 @@ class CsvFileLoader implements LoaderInterface
      */
     public function getItems()
     {
-        if ($this->filename === null) {
-            throw new \Exception('Filename is not set');
-        }
-
-        $this->f = fopen($this->filename, 'r');
-        if ($this->f === false) {
-            throw new \Exception('Cannot open file');
-        }
+        $this->openFile();
 
         if ($this->headers === false) {
             $countHeaders = 0;
@@ -104,10 +97,7 @@ class CsvFileLoader implements LoaderInterface
             yield $item;
         }
 
-        if ($this->f) {
-            fclose($this->f);
-            $this->f = null;
-        }
+        $this->closeFile();
     }
 
     /**
@@ -147,5 +137,51 @@ class CsvFileLoader implements LoaderInterface
     public function setEnclosure($enclosure)
     {
         $this->enclosure = $enclosure;
+    }
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public function countItems()
+    {
+        $this->openFile();
+        if ($this->headers === null) {
+            fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+        }
+
+        $count = 0;
+        while ($this->f && !feof($this->f)) {
+            $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+            if (empty($cols)) {
+                continue;
+            }
+
+            $count++;
+        }
+
+        $this->closeFile();
+
+        return $count;
+    }
+
+    private function openFile()
+    {
+        if ($this->filename === null) {
+            throw new \Exception('Filename is not set');
+        }
+
+        $this->f = fopen($this->filename, 'r');
+        if ($this->f === false) {
+            throw new \Exception('Cannot open file');
+        }
+    }
+
+    private function closeFile()
+    {
+        if ($this->f) {
+            fclose($this->f);
+            $this->f = null;
+        }
     }
 }

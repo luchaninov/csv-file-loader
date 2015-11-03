@@ -48,14 +48,7 @@ class TxtFileLoader implements LoaderInterface
      */
     public function getItems()
     {
-        if ($this->filename === null) {
-            throw new \Exception('Filename is not set');
-        }
-
-        $this->f = fopen($this->filename, 'r');
-        if ($this->f === false) {
-            throw new \Exception('Cannot open file');
-        }
+        $this->openFile();
 
         while ($this->f && !feof($this->f)) {
             $s = rtrim(fgets($this->f), "\r\n");
@@ -69,10 +62,7 @@ class TxtFileLoader implements LoaderInterface
             yield $s;
         }
 
-        if ($this->f) {
-            fclose($this->f);
-            $this->f = null;
-        }
+        $this->closeFile();
     }
 
     /**
@@ -104,5 +94,51 @@ class TxtFileLoader implements LoaderInterface
     public function setSkipComments($skipComments)
     {
         $this->skipComments = $skipComments;
+    }
+
+    /**
+     * @return int
+     * @throws \Exception
+     */
+    public function countItems()
+    {
+        $this->openFile();
+
+        $count = 0;
+        while ($this->f && !feof($this->f)) {
+            $s = rtrim(fgets($this->f), "\r\n");
+            if ($this->skipEmptyRows && trim($s) === '') {
+                continue;
+            }
+            if ($this->skipComments && substr(ltrim($s), 0, 1) === '#') {
+                continue;
+            }
+
+            $count++;
+        }
+
+        $this->closeFile();
+
+        return $count;
+    }
+
+    private function openFile()
+    {
+        if ($this->filename === null) {
+            throw new \Exception('Filename is not set');
+        }
+
+        $this->f = fopen($this->filename, 'r');
+        if ($this->f === false) {
+            throw new \Exception('Cannot open file');
+        }
+    }
+
+    private function closeFile()
+    {
+        if ($this->f) {
+            fclose($this->f);
+            $this->f = null;
+        }
     }
 }

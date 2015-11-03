@@ -70,6 +70,8 @@ If you don't have headers in the first row - you can:
 
 If there are more cols in some rows than there are cols in headers then numerical keys are added.
 
+To count items use `countItems()`. In case of CSV it's not always the same with rows count - `wc -l`, because one item can have several rows.
+
 You can use same loader to load several files - `$loader->setFilename('other_file.csv')`. If you iterate during some file when calling
 `setFilename` then there will be no more items from the first file, foreach will just finish.
 
