@@ -89,4 +89,27 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
 
         @unlink($filename);
     }
+
+    public function testErrorNotSetFilename()
+    {
+        $this->setExpectedException('Exception', 'Filename is not set');
+
+        $loader = new TxtFileLoader();
+        foreach ($loader->getItems() as $item) {
+            // no need to iterate because throws an exception
+        }
+    }
+
+    public function testErrorMissingFile()
+    {
+        $filename = 'not_existing';
+
+        $this->setExpectedException('Exception', 'File "not_existing" is not found');
+
+        $loader = new TxtFileLoader();
+        $loader->setFilename($filename);
+        foreach ($loader->getItems() as $item) {
+            // no need to iterate because throws an exception
+        }
+    }
 }

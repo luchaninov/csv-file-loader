@@ -31,10 +31,6 @@ class TxtFileLoader implements LoaderInterface
      */
     public function setFilename($filename)
     {
-        if (!file_exists($filename)) {
-            throw new \Exception(sprintf('File "%s" is not found', $filename));
-        }
-
         $this->filename = $filename;
         if ($this->f) {
             fclose($this->f);
@@ -126,6 +122,10 @@ class TxtFileLoader implements LoaderInterface
     {
         if ($this->filename === null) {
             throw new \Exception('Filename is not set');
+        }
+
+        if (!file_exists($this->filename)) {
+            throw new \Exception(sprintf('File "%s" is not found', $this->filename));
         }
 
         $this->f = fopen($this->filename, 'r');

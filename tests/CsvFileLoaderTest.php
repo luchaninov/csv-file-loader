@@ -229,5 +229,8 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
+        foreach ($loader->getItems() as $item) {
+            // no need to iterate because throws an exception
+        }
     }
 }

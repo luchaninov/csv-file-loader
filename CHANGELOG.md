@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.6.1
+-----
+- don't try to find file during `setFilename()`, can appear later
+
 1.6.0
 -----
 - added method `countItems()`
