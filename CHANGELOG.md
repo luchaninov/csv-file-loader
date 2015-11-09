@@ -1,6 +1,10 @@
 Changelog
 =========
 
+1.7.0
+-----
+- added method `setAddUnknownColumns()`
+
 1.6.1
 -----
 - don't try to find file during `setFilename()`, can appear later

@@ -25,6 +25,12 @@ class CsvFileLoader implements LoaderInterface
      */
     protected $enclosure = '"';
 
+    /**
+     * Add numeric key elements for rows that have more elements than headers
+     * @var bool
+     */
+    protected $addUnknownColumns = false;
+
     public function __construct($filename = null, $headers = null)
     {
         if ($filename !== null) {
@@ -56,14 +62,15 @@ class CsvFileLoader implements LoaderInterface
     {
         $this->openFile();
 
-        if ($this->headers === false) {
+        $headers = $this->headers;
+        if ($headers === false) {
             $countHeaders = 0;
         } else {
-            if ($this->headers === null) {
+            if ($headers === null) {
                 $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
-                $this->headers = $cols;
+                $headers = $cols;
             }
-            $countHeaders = count($this->headers);
+            $countHeaders = count($headers);
         }
 
         while ($this->f && !feof($this->f)) {
@@ -71,22 +78,24 @@ class CsvFileLoader implements LoaderInterface
             if (empty($cols)) {
                 continue;
             }
-            if ($this->headers === false) {
+            if ($headers === false) {
                 $item = $cols;
             } else {
                 $countCols = count($cols);
                 if ($countHeaders < $countCols) {
-                    $item = ($countHeaders) ? array_combine($this->headers, array_slice($cols, 0, $countHeaders)) : [];
-                    for ($i = $countHeaders; $i < $countCols; $i++) {
-                        $item[$i] = $cols[$i];
+                    $item = ($countHeaders) ? array_combine($headers, array_slice($cols, 0, $countHeaders)) : [];
+                    if ($this->addUnknownColumns) {
+                        for ($i = $countHeaders; $i < $countCols; $i++) {
+                            $item[$i] = $cols[$i];
+                        }
                     }
                 } elseif ($countHeaders > $countCols) {
-                    $item = array_combine(array_slice($this->headers, 0, $countCols), $cols);
+                    $item = array_combine(array_slice($headers, 0, $countCols), $cols);
                     for ($i = $countCols; $i < $countHeaders; $i++) {
                         $item[$i] = null;
                     }
                 } else {
-                    $item = array_combine($this->headers, $cols);
+                    $item = array_combine($headers, $cols);
                 }
             }
 
@@ -133,6 +142,14 @@ class CsvFileLoader implements LoaderInterface
     public function setEnclosure($enclosure)
     {
         $this->enclosure = $enclosure;
+    }
+
+    /**
+     * @param boolean $addUnknownColumns
+     */
+    public function setAddUnknownColumns($addUnknownColumns)
+    {
+        $this->addUnknownColumns = $addUnknownColumns;
     }
 
     /**

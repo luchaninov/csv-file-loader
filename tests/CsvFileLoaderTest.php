@@ -8,10 +8,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -34,10 +34,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -53,10 +53,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -76,10 +76,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader($filename);
 
@@ -101,9 +101,9 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader($filename, ['key1', 'key2']);
 
@@ -125,9 +125,9 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader($filename, false);
 
@@ -149,16 +149,16 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_1_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
         $filename2 = sys_get_temp_dir() . '/test_CsvFileLoader_2_' . microtime(true) . '.txt';
         file_put_contents($filename2, implode("\n", [
-                implode(',', ['key1', 'key2']),
-                implode(',', ['r1_1', 'r1_2']),
-                implode(',', ['r2_1', 'r2_2']),
-            ]) . "\n");
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -187,10 +187,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\r\n", [
-                implode(",", ['key1', 'key2']),
-                implode(",", ["~r1_,\n1~", '~r1_2~']),
-                implode(",", ['r2_1', '~r2_2~']),
-            ]) . "\r\n");
+            implode(",", ['key1', 'key2']),
+            implode(",", ["~r1_,\n1~", '~r1_2~']),
+            implode(",", ['r2_1', '~r2_2~']),
+        ]) . "\r\n");
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -232,5 +232,36 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         foreach ($loader->getItems() as $item) {
             // no need to iterate because throws an exception
         }
+    }
+
+    public function testAddUnknownColumns()
+    {
+        $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
+        file_put_contents($filename, implode("\n", [
+            implode(',', ['key1', 'key2']),
+            implode(',', ['r1_1', 'r1_2', 'r1_3']),
+            implode(',', ['r2_1', 'r2_2']),
+        ]) . "\n");
+
+        $loader = new CsvFileLoader($filename);
+
+        // first try default behavior
+        $actual = $loader->getItemsArray();
+        $expected = [
+            ['key1' => 'r1_1', 'key2' => 'r1_2'],
+            ['key1' => 'r2_1', 'key2' => 'r2_2'],
+        ];
+        $this->assertEquals($expected, $actual);
+
+        // and now try get all columns including unknown
+        $loader->setAddUnknownColumns(true);
+        $actual = $loader->getItemsArray();
+        $expected = [
+            ['key1' => 'r1_1', 'key2' => 'r1_2', 2 => 'r1_3'],
+            ['key1' => 'r2_1', 'key2' => 'r2_2'],
+        ];
+        $this->assertEquals($expected, $actual);
+
+        @unlink($filename);
     }
 }

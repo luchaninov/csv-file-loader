@@ -68,7 +68,8 @@ If you don't have headers in the first row - you can:
 - set your own keys - `setHeaders(['key1', 'key2', ...])`
 - use numerical keys `[0, 1, 2, ...]` - `setHeaders(false)`
 
-If there are more cols in some rows than there are cols in headers then numerical keys are added.
+If there are more cols in some rows than there are cols in headers then they are truncated.
+If you prefer to add extra values with numerical keys use `setAddUnknownColumns(true)`.
 
 To count items use `countItems()`. In case of CSV it's not always the same with rows count - `wc -l`, because one item can have several rows.
 
