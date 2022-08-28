@@ -2,7 +2,7 @@
     "name": "luchaninov/csv-file-loader",
     "type": "library",
     "license": "MIT",
-    "description": "Load CSV files using PHP generators",
+    "description": "Load CSV & TSV files and strings. Using generators to minimize memory usage",
     "keywords": ["csv", "tsv", "loader", "generator"],
     "authors": [
         {

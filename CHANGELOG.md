@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.8.0
+-----
+- upgraded to php 8.1
+- added loaders from strings without files: `CsvStringLoader`, `TsvStringLoader`
+
 1.7.0
 -----
 - added method `setAddUnknownColumns()`

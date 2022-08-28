@@ -1,21 +1,20 @@
 <?php
 
 use Luchaninov\CsvFileLoader\CsvFileLoader;
+use Luchaninov\CsvFileLoader\CsvStringLoader;
 use PHPUnit\Framework\TestCase;
 
-class CsvFileLoaderTest extends TestCase
+class CsvStringLoaderTest extends TestCase
 {
     public function testGetItems(): void
     {
-        $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
-        file_put_contents($filename, implode("\n", [
+        $s = implode("\n", [
             implode(',', ['key1', 'key2']),
             implode(',', ['r1_1', 'r1_2']),
             implode(',', ['r2_1', 'r2_2']),
-        ]) . "\n");
+        ]) . "\n";
 
-        $loader = new CsvFileLoader();
-        $loader->setFilename($filename);
+        $loader = new CsvStringLoader($s);
 
         $actual = [];
         foreach ($loader->getItems() as $item) {
@@ -27,8 +26,31 @@ class CsvFileLoaderTest extends TestCase
             ['key1' => 'r2_1', 'key2' => 'r2_2'],
         ];
         $this->assertEquals($expected, $actual);
+    }
 
-        @unlink($filename);
+    public function testGetItems_MultilineRow(): void
+    {
+        $s = <<<EOD
+"key1","key2"
+"r1
+_
+1","r1_2"
+r2_1,r2_2
+
+EOD;
+
+        $loader = new CsvStringLoader($s);
+
+        $actual = [];
+        foreach ($loader->getItems() as $item) {
+            $actual[] = $item;
+        }
+
+        $expected = [
+            ['key1' => "r1\n_\n1", 'key2' => 'r1_2'],
+            ['key1' => 'r2_1', 'key2' => 'r2_2'],
+        ];
+        $this->assertEquals($expected, $actual);
     }
 
     public function testCountItems(): void

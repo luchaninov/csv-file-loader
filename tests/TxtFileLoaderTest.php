@@ -91,17 +91,27 @@ class TxtFileLoaderTest extends TestCase
         @unlink($filename);
     }
 
+    /**
+     * @noinspection PhpStatementHasEmptyBodyInspection
+     * @noinspection LoopWhichDoesNotLoopInspection
+     * @noinspection MissingOrEmptyGroupStatementInspection
+     */
     public function testErrorNotSetFilename(): void
     {
         $this->expectException('RuntimeException');
         $this->expectExceptionMessage('Filename is not set');
 
         $loader = new TxtFileLoader();
-        foreach ($loader->getItems() as $item) {
+        foreach ($loader->getItems() as $ignored) {
             // no need to iterate because throws an exception
         }
     }
 
+    /**
+     * @noinspection PhpStatementHasEmptyBodyInspection
+     * @noinspection LoopWhichDoesNotLoopInspection
+     * @noinspection MissingOrEmptyGroupStatementInspection
+     */
     public function testErrorMissingFile(): void
     {
         $filename = 'not_existing';
@@ -111,7 +121,7 @@ class TxtFileLoaderTest extends TestCase
 
         $loader = new TxtFileLoader();
         $loader->setFilename($filename);
-        foreach ($loader->getItems() as $item) {
+        foreach ($loader->getItems() as $ignored) {
             // no need to iterate because throws an exception
         }
     }
