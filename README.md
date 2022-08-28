@@ -50,6 +50,12 @@ item1,"item2
 still item2",item3
 ```
 
+If you have simple string, no need to save it to the file. Use
+```php
+(new CsvStringLoader($s))->getItemsArray();
+(new TsvStringLoader($s))->getItemsArray();
+```
+
 Advanced Usage
 --------------
 
