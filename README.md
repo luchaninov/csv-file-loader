@@ -1,7 +1,7 @@
 CSV File Loader
 ===============
 
-Load CSV files using PHP generators. It uses memory like `fopen` but requires less code.
+Load CSV & TSV files and strings using PHP generators. It uses memory like `fopen` but requires less code.
 
 How to Install
 --------------
@@ -9,7 +9,7 @@ How to Install
 Install the `luchaninov/csv-file-loader` package using [composer](http://getcomposer.org/):
 
 ```shell
-$ composer require "luchaninov/csv-file-loader:1.*"
+$ composer require luchaninov/csv-file-loader
 ```
 
 Basic Usage
