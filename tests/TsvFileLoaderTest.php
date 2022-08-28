@@ -1,10 +1,11 @@
 <?php
 
 use Luchaninov\CsvFileLoader\TsvFileLoader;
+use PHPUnit\Framework\TestCase;
 
-class TsvFileLoaderTest extends \PHPUnit_Framework_TestCase
+class TsvFileLoaderTest extends TestCase
 {
-    public function testGetItems()
+    public function testGetItems(): void
     {
         $filename = sys_get_temp_dir() . '/test_TsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [

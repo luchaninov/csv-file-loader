@@ -2,21 +2,19 @@
 
 namespace Luchaninov\CsvFileLoader;
 
+use Generator;
+use RuntimeException;
+
 class TxtFileLoader implements LoaderInterface
 {
-    /**
-     * @var string
-     */
-    private $filename = null;
+    private ?string $filename = null;
 
-    /**
-     * @var resource
-     */
+    /** @var resource|null */
     private $f = null;
 
-    private $skipEmptyRows = true;
+    private bool $skipEmptyRows = true;
 
-    private $skipComments = false;
+    private bool $skipComments = false;
 
     public function __construct($filename = null)
     {
@@ -25,33 +23,27 @@ class TxtFileLoader implements LoaderInterface
         }
     }
 
-    /**
-     * @param string $filename
-     * @throws \Exception
-     */
-    public function setFilename($filename)
+    public function setFilename(string $filename): self
     {
         $this->filename = $filename;
         if ($this->f) {
             fclose($this->f);
             $this->f = null;
         }
+
+        return $this;
     }
 
-    /**
-     * @return \Generator
-     * @throws \Exception
-     */
-    public function getItems()
+    public function getItems(): Generator
     {
         $this->openFile();
 
         while ($this->f && !feof($this->f)) {
-            $s = rtrim(fgets($this->f), "\r\n");
+            $s = rtrim((string)fgets($this->f), "\r\n");
             if ($this->skipEmptyRows && trim($s) === '') {
                 continue;
             }
-            if ($this->skipComments && substr(ltrim($s), 0, 1) === '#') {
+            if ($this->skipComments && str_starts_with(ltrim($s), '#')) {
                 continue;
             }
 
@@ -61,11 +53,7 @@ class TxtFileLoader implements LoaderInterface
         $this->closeFile();
     }
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getItemsArray()
+    public function getItemsArray(): array
     {
         $result = [];
 
@@ -76,37 +64,31 @@ class TxtFileLoader implements LoaderInterface
         return $result;
     }
 
-    /**
-     * @param boolean $skipEmptyRows
-     */
-    public function setSkipEmptyRows($skipEmptyRows)
+    public function setSkipEmptyRows(bool $skipEmptyRows): self
     {
         $this->skipEmptyRows = $skipEmptyRows;
+
+        return $this;
     }
 
-    /**
-     * @param boolean $skipComments
-     */
-    public function setSkipComments($skipComments)
+    public function setSkipComments(bool $skipComments): self
     {
         $this->skipComments = $skipComments;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     * @throws \Exception
-     */
-    public function countItems()
+    public function countItems(): int
     {
         $this->openFile();
 
         $count = 0;
         while ($this->f && !feof($this->f)) {
-            $s = rtrim(fgets($this->f), "\r\n");
+            $s = rtrim((string)fgets($this->f), "\r\n");
             if ($this->skipEmptyRows && trim($s) === '') {
                 continue;
             }
-            if ($this->skipComments && substr(ltrim($s), 0, 1) === '#') {
+            if ($this->skipComments && str_starts_with(ltrim($s), '#')) {
                 continue;
             }
 
@@ -118,23 +100,23 @@ class TxtFileLoader implements LoaderInterface
         return $count;
     }
 
-    private function openFile()
+    private function openFile(): void
     {
         if ($this->filename === null) {
-            throw new \Exception('Filename is not set');
+            throw new RuntimeException('Filename is not set');
         }
 
         if (!file_exists($this->filename)) {
-            throw new \Exception(sprintf('File "%s" is not found', $this->filename));
+            throw new RuntimeException(sprintf('File "%s" is not found', $this->filename));
         }
 
-        $this->f = fopen($this->filename, 'r');
+        $this->f = fopen($this->filename, 'rb');
         if ($this->f === false) {
-            throw new \Exception('Cannot open file');
+            throw new RuntimeException('Cannot open file');
         }
     }
 
-    private function closeFile()
+    private function closeFile(): void
     {
         if ($this->f) {
             fclose($this->f);

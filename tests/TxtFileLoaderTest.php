@@ -1,10 +1,11 @@
 <?php
 
 use Luchaninov\CsvFileLoader\TxtFileLoader;
+use PHPUnit\Framework\TestCase;
 
-class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
+class TxtFileLoaderTest extends TestCase
 {
-    public function testGetItems()
+    public function testGetItems(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", ['test1', 'test2', '', 'test3', '']));
@@ -22,7 +23,7 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsArray()
+    public function testGetItemsArray(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", ['test1', 'test2', '', 'test3', '']));
@@ -37,7 +38,7 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testCountItems()
+    public function testCountItems(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", ['test1', 'test2', '', 'test3', '']));
@@ -52,7 +53,7 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testSetSkipEmptyRows()
+    public function testSetSkipEmptyRows(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", ['test1', 'test2', '', 'test3', '']));
@@ -71,7 +72,7 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testSetSkipComments()
+    public function testSetSkipComments(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", ['test1', 'test2', '# comment', 'test3', '  # comment with whitespaces']));
@@ -90,9 +91,10 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testErrorNotSetFilename()
+    public function testErrorNotSetFilename(): void
     {
-        $this->setExpectedException('Exception', 'Filename is not set');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('Filename is not set');
 
         $loader = new TxtFileLoader();
         foreach ($loader->getItems() as $item) {
@@ -100,11 +102,12 @@ class TxtFileLoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testErrorMissingFile()
+    public function testErrorMissingFile(): void
     {
         $filename = 'not_existing';
 
-        $this->setExpectedException('Exception', 'File "not_existing" is not found');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('File "not_existing" is not found');
 
         $loader = new TxtFileLoader();
         $loader->setFilename($filename);

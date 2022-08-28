@@ -2,36 +2,25 @@
 
 namespace Luchaninov\CsvFileLoader;
 
+use Generator;
+use RuntimeException;
+
 class CsvFileLoader implements LoaderInterface
 {
-    /**
-     * @var string
-     */
-    private $filename = null;
-    /**
-     * @var null|false|array Null - is not yet set, False - don't use headers, Array - already loaded headers
-     */
-    private $headers = null;
-    /**
-     * @var resource
-     */
+    private ?string $filename = null;
+
+    private null|false|array $headers; // Null - is not yet set, False - don't use headers, Array - already loaded headers
+
+    /** @var resource|null */
     private $f = null;
-    /**
-     * @var string
-     */
-    protected $delimiter = ',';
-    /**
-     * @var string
-     */
-    protected $enclosure = '"';
 
-    /**
-     * Add numeric key elements for rows that have more elements than headers
-     * @var bool
-     */
-    protected $addUnknownColumns = false;
+    protected string $delimiter = ',';
 
-    public function __construct($filename = null, $headers = null)
+    protected string $enclosure = '"';
+
+    protected bool $addUnknownColumns = false; // Add numeric key elements for rows that have more elements than headers
+
+    public function __construct(string $filename = null, array|bool $headers = null)
     {
         if ($filename !== null) {
             $this->setFilename($filename);
@@ -40,11 +29,7 @@ class CsvFileLoader implements LoaderInterface
         $this->headers = $headers;
     }
 
-    /**
-     * @param string $filename
-     * @throws \Exception
-     */
-    public function setFilename($filename)
+    public function setFilename(string $filename): self
     {
         $this->filename = $filename;
         $this->headers = null;
@@ -52,13 +37,11 @@ class CsvFileLoader implements LoaderInterface
             fclose($this->f);
             $this->f = null;
         }
+
+        return $this;
     }
 
-    /**
-     * @return \Generator
-     * @throws \Exception
-     */
-    public function getItems()
+    public function getItems(): Generator
     {
         $this->openFile();
 
@@ -105,11 +88,7 @@ class CsvFileLoader implements LoaderInterface
         $this->closeFile();
     }
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getItemsArray()
+    public function getItemsArray(): array
     {
         $result = [];
 
@@ -120,43 +99,35 @@ class CsvFileLoader implements LoaderInterface
         return $result;
     }
 
-    /**
-     * @param array|null $headers
-     */
-    public function setHeaders($headers)
+    public function setHeaders(?array $headers): self
     {
         $this->headers = $headers;
+
+        return $this;
     }
 
-    /**
-     * @param string $delimiter
-     */
-    public function setDelimiter($delimiter)
+    public function setDelimiter(string $delimiter): self
     {
         $this->delimiter = $delimiter;
+
+        return $this;
     }
 
-    /**
-     * @param string $enclosure
-     */
-    public function setEnclosure($enclosure)
+    public function setEnclosure(string $enclosure): self
     {
         $this->enclosure = $enclosure;
+
+        return $this;
     }
 
-    /**
-     * @param boolean $addUnknownColumns
-     */
-    public function setAddUnknownColumns($addUnknownColumns)
+    public function setAddUnknownColumns(bool $addUnknownColumns): self
     {
         $this->addUnknownColumns = $addUnknownColumns;
+
+        return $this;
     }
 
-    /**
-     * @return int
-     * @throws \Exception
-     */
-    public function countItems()
+    public function countItems(): int
     {
         $this->openFile();
         if ($this->headers === null) {
@@ -178,23 +149,23 @@ class CsvFileLoader implements LoaderInterface
         return $count;
     }
 
-    private function openFile()
+    private function openFile(): void
     {
         if ($this->filename === null) {
-            throw new \Exception('Filename is not set');
+            throw new RuntimeException('Filename is not set');
         }
 
         if (!file_exists($this->filename)) {
-            throw new \Exception(sprintf('File "%s" is not found', $this->filename));
+            throw new RuntimeException(sprintf('File "%s" is not found', $this->filename));
         }
 
-        $this->f = fopen($this->filename, 'r');
+        $this->f = fopen($this->filename, 'rb');
         if ($this->f === false) {
-            throw new \Exception('Cannot open file');
+            throw new RuntimeException('Cannot open file');
         }
     }
 
-    private function closeFile()
+    private function closeFile(): void
     {
         if ($this->f) {
             fclose($this->f);

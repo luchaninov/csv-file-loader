@@ -1,10 +1,11 @@
 <?php
 
 use Luchaninov\CsvFileLoader\CsvFileLoader;
+use PHPUnit\Framework\TestCase;
 
-class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
+class CsvFileLoaderTest extends TestCase
 {
-    public function testGetItems()
+    public function testGetItems(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -30,7 +31,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testCountItems()
+    public function testCountItems(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -49,7 +50,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsArray()
+    public function testGetItemsArray(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -72,7 +73,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsInitWithConstructor()
+    public function testGetItemsInitWithConstructor(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -97,7 +98,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsInitWithConstructorHeaders()
+    public function testGetItemsInitWithConstructorHeaders(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -121,7 +122,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsInitWithFalseHeaders()
+    public function testGetItemsInitWithFalseHeaders(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -145,7 +146,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testGetItemsSwitchFile()
+    public function testGetItemsSwitchFile(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_1_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [
@@ -183,7 +184,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename2);
     }
 
-    public function testGetItemsCustomDelimiters()
+    public function testGetItemsCustomDelimiters(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\r\n", [
@@ -211,9 +212,10 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         @unlink($filename);
     }
 
-    public function testErrorNotSetFilename()
+    public function testErrorNotSetFilename(): void
     {
-        $this->setExpectedException('Exception', 'Filename is not set');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('Filename is not set');
 
         $loader = new CsvFileLoader();
         foreach ($loader->getItems() as $item) {
@@ -221,11 +223,12 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testErrorMissingFile()
+    public function testErrorMissingFile(): void
     {
         $filename = 'not_existing';
 
-        $this->setExpectedException('Exception', 'File "not_existing" is not found');
+        $this->expectException('RuntimeException');
+        $this->expectExceptionMessage('File "not_existing" is not found');
 
         $loader = new CsvFileLoader();
         $loader->setFilename($filename);
@@ -234,7 +237,7 @@ class CsvFileLoaderTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    public function testAddUnknownColumns()
+    public function testAddUnknownColumns(): void
     {
         $filename = sys_get_temp_dir() . '/test_CsvFileLoader_' . microtime(true) . '.txt';
         file_put_contents($filename, implode("\n", [

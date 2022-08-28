@@ -2,23 +2,13 @@
 
 namespace Luchaninov\CsvFileLoader;
 
+use Generator;
+
 interface LoaderInterface
 {
-    /**
-     * @return \Generator
-     * @throws \Exception
-     */
-    public function getItems();
+    public function getItems(): Generator;
 
-    /**
-     * @return array
-     * @throws \Exception
-     */
-    public function getItemsArray();
+    public function getItemsArray(): array;
 
-    /**
-     * @return int
-     * @throws \Exception
-     */
-    public function countItems();
+    public function countItems(): int;
 }
