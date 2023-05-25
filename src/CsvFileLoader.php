@@ -44,20 +44,29 @@ class CsvFileLoader implements LoaderInterface
     public function getItems(): Generator
     {
         $this->openFile();
+        $delimiter = null;
 
         $headers = $this->headers;
         if ($headers === false) {
             $countHeaders = 0;
         } else {
             if ($headers === null) {
-                $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+                if ($delimiter === null) {
+                    $delimiter = $this->detectDelimiter();
+                }
+
+                $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure);
                 $headers = $cols;
             }
             $countHeaders = count($headers);
         }
 
         while ($this->f && !feof($this->f)) {
-            $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+            if ($delimiter === null) {
+                $delimiter = $this->detectDelimiter();
+            }
+
+            $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure);
             if (empty($cols)) {
                 continue;
             }
@@ -171,5 +180,15 @@ class CsvFileLoader implements LoaderInterface
             fclose($this->f);
             $this->f = null;
         }
+    }
+
+    private function detectDelimiter(): string
+    {
+        $pos = ftell($this->f);
+        $s = fgets($this->f, 1000);
+        $delimiter = DelimiterDetector::detect($s);
+        fseek($this->f, $pos); // return back to original position in file
+
+        return $delimiter;
     }
 }

@@ -26,6 +26,8 @@ class CsvStringLoader implements LoaderInterface
 
     public function getItems(): Generator
     {
+        $delimiter = ($this->delimiter === 'auto') ? DelimiterDetector::detect(mb_substr($this->originalData, 0, 10000)) : $this->delimiter;
+
         $rows = str_getcsv($this->originalData, "\n", $this->enclosure);
 
         $startRowIndex = 0;
@@ -34,7 +36,7 @@ class CsvStringLoader implements LoaderInterface
             $countHeaders = 0;
         } else {
             if ($headers === null) {
-                $cols = str_getcsv($rows[$startRowIndex], $this->delimiter, $this->enclosure);
+                $cols = str_getcsv($rows[$startRowIndex], $delimiter, $this->enclosure);
                 $headers = $cols;
                 $startRowIndex++;
             }
@@ -48,7 +50,7 @@ class CsvStringLoader implements LoaderInterface
                 continue;
             }
 
-            $cols = str_getcsv($row, $this->delimiter, $this->enclosure);
+            $cols = str_getcsv($row, $delimiter, $this->enclosure);
             if (!$cols) {
                 continue;
             }
