@@ -54,6 +54,7 @@ If you have simple string, no need to save it to the file. Use
 ```php
 (new CsvStringLoader($s))->getItemsArray();
 (new TsvStringLoader($s))->getItemsArray();
+(new AutoStringLoader($s))->getItemsArray();
 ```
 
 Advanced Usage
@@ -63,8 +64,10 @@ If file is not large you can load all items at once without generators using `ge
 
 If you have custom delimiters use `setDelimiter` like `$loader->setDelimiter(';')`. Same with encloser - `setEncloser`.
 Default delimiter is `,` for `CsvFileLoader` and `\t` for `TsvFileLoader`; default encloser is `"`.
+If you are not sure - use delimiter `auto`, it detects delimiter automatically by the first 10,000 characters.
 
 If you have TSV instead of CSV you can set use `setDelimiter("\t")` or use `TsvFileLoader`.
+If you are not sure - use `AutoFileLoader`, it detects delimiter automatically.
 
 By default it assumes that the first row of the file contains headers - it doesn't return this row as item but uses as keys for next rows.
 If you don't have headers in the first row - you can:
