@@ -5,7 +5,6 @@
 namespace Luchaninov\CsvFileLoader;
 
 use Generator;
-use RuntimeException;
 
 class CsvStringLoader implements LoaderInterface
 {
@@ -14,12 +13,15 @@ class CsvStringLoader implements LoaderInterface
     private string $originalData;
 
     protected string $delimiter = ',';
-
     protected string $enclosure = '"';
+    protected string $escape = '\\';
+
     protected bool $addUnknownColumns = false; // Add numeric key elements for rows that have more elements than headers
 
-    public function __construct(string $data, array|bool $headers = null)
-    {
+    public function __construct(
+        string $data,
+        array|bool|null $headers = null,
+    ) {
         $this->originalData = $data;
         $this->headers = $headers;
     }
@@ -28,7 +30,7 @@ class CsvStringLoader implements LoaderInterface
     {
         $delimiter = ($this->delimiter === 'auto') ? DelimiterDetector::detect(mb_substr($this->originalData, 0, 10000)) : $this->delimiter;
 
-        $rows = str_getcsv($this->originalData, "\n", $this->enclosure);
+        $rows = str_getcsv($this->originalData, "\n", $this->enclosure, $this->escape);
 
         $startRowIndex = 0;
         $headers = $this->headers;
@@ -36,7 +38,7 @@ class CsvStringLoader implements LoaderInterface
             $countHeaders = 0;
         } else {
             if ($headers === null) {
-                $cols = str_getcsv($rows[$startRowIndex], $delimiter, $this->enclosure);
+                $cols = str_getcsv($rows[$startRowIndex], $delimiter, $this->enclosure, $this->escape);
                 $headers = $cols;
                 $startRowIndex++;
             }
@@ -50,7 +52,7 @@ class CsvStringLoader implements LoaderInterface
                 continue;
             }
 
-            $cols = str_getcsv($row, $delimiter, $this->enclosure);
+            $cols = str_getcsv($row, $delimiter, $this->enclosure, $this->escape);
             if (!$cols) {
                 continue;
             }
@@ -107,6 +109,13 @@ class CsvStringLoader implements LoaderInterface
     public function setEnclosure(string $enclosure): self
     {
         $this->enclosure = $enclosure;
+
+        return $this;
+    }
+
+    public function setEscape(string $escape): self
+    {
+        $this->escape = $escape;
 
         return $this;
     }

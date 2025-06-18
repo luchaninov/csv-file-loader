@@ -15,13 +15,15 @@ class CsvFileLoader implements LoaderInterface
     private $f = null;
 
     protected string $delimiter = ',';
-
     protected string $enclosure = '"';
+    protected string $escape = '\\';
 
     protected bool $addUnknownColumns = false; // Add numeric key elements for rows that have more elements than headers
 
-    public function __construct(string $filename = null, array|bool $headers = null)
-    {
+    public function __construct(
+        string|null $filename = null,
+        array|bool|null $headers = null,
+    ) {
         if ($filename !== null) {
             $this->setFilename($filename);
         }
@@ -55,7 +57,7 @@ class CsvFileLoader implements LoaderInterface
                     $delimiter = $this->detectDelimiter();
                 }
 
-                $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure);
+                $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure, $this->escape);
                 $headers = $cols;
             }
             $countHeaders = count($headers);
@@ -66,7 +68,7 @@ class CsvFileLoader implements LoaderInterface
                 $delimiter = $this->detectDelimiter();
             }
 
-            $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure);
+            $cols = fgetcsv($this->f, 0, $delimiter, $this->enclosure, $this->escape);
             if (empty($cols)) {
                 continue;
             }
@@ -129,6 +131,13 @@ class CsvFileLoader implements LoaderInterface
         return $this;
     }
 
+    public function setEscape(string $escape): self
+    {
+        $this->escape = $escape;
+
+        return $this;
+    }
+
     public function setAddUnknownColumns(bool $addUnknownColumns): self
     {
         $this->addUnknownColumns = $addUnknownColumns;
@@ -140,12 +149,12 @@ class CsvFileLoader implements LoaderInterface
     {
         $this->openFile();
         if ($this->headers === null) {
-            fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+            fgetcsv($this->f, 0, $this->delimiter, $this->enclosure, $this->escape);
         }
 
         $count = 0;
         while ($this->f && !feof($this->f)) {
-            $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure);
+            $cols = fgetcsv($this->f, 0, $this->delimiter, $this->enclosure, $this->escape);
             if (empty($cols)) {
                 continue;
             }
